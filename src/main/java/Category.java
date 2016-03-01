@@ -45,6 +45,17 @@ public class Category {
     }
   }
 
+
+ public void update(String name) {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "UPDATE categories SET name = :name WHERE id = :id";
+    con.createQuery(sql)
+      .addParameter("name", name)
+      .addParameter("id", id)
+      .executeUpdate();
+  }
+}
+
   public static Category find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM Categories where id=:id";

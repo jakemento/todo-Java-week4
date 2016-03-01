@@ -111,5 +111,28 @@ public class App {
       return null;
     });
 
+
+    get("/categories/:id/edit", (request, response) -> {
+     HashMap<String, Object> model = new HashMap<String, Object>();
+
+     Category thisCategory = Category.find(Integer.parseInt(request.params("id")));
+
+     model.put("category", thisCategory);
+     model.put("allTasks", Task.all());
+     model.put("template", "templates/updateCategory.vtl");
+     return new ModelAndView(model, layout);
+   }, new VelocityTemplateEngine());
+
+   post("/categories/:id/change-name", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+
+    Category thisCategory = Category.find(Integer.parseInt(request.params("id")));
+
+    thisCategory.update(request.queryParams("newname"));
+    response.redirect("/categories/" + thisCategory.getId());
+    return null;
+      });
+
+
   }
 }
