@@ -166,7 +166,7 @@ COPY categories (id, name) FROM stdin;
 -- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jws
 --
 
-SELECT pg_catalog.setval('categories_id_seq', 28, true);
+SELECT pg_catalog.setval('categories_id_seq', 36, true);
 
 
 --
@@ -184,7 +184,7 @@ COPY categories_tasks (id, category_id, task_id) FROM stdin;
 -- Name: categories_tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jws
 --
 
-SELECT pg_catalog.setval('categories_tasks_id_seq', 3, true);
+SELECT pg_catalog.setval('categories_tasks_id_seq', 8, true);
 
 
 --
@@ -199,7 +199,7 @@ COPY tasks (id, description) FROM stdin;
 -- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jws
 --
 
-SELECT pg_catalog.setval('tasks_id_seq', 9, true);
+SELECT pg_catalog.setval('tasks_id_seq', 20, true);
 
 
 --
