@@ -24,6 +24,15 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("/tasks", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String description = request.queryParams("description");
+      Task newTask = new Task(description);
+      newTask.save();
+      response.redirect("/tasks");
+      return null;
+    });
+
     get("/categories", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       List<Category> categories = Category.all();
@@ -31,6 +40,16 @@ public class App {
       model.put("template", "templates/categories.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+
+    post("/categories", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String name = request.queryParams("name");
+      Category newCategory = new Category(name);
+      newCategory.save();
+      response.redirect("/categories");
+      return null;
+    });
 
     get("/tasks/:id", (request,response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -52,23 +71,6 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/tasks", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      String description = request.queryParams("description");
-      Task newTask = new Task(description);
-      newTask.save();
-      response.redirect("/tasks");
-      return null;
-    });
-
-    post("/categories", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-      String name = request.queryParams("name");
-      Category newCategory = new Category(name);
-      newCategory.save();
-      response.redirect("/categories");
-      return null;
-    });
 
     post("/add_tasks", (request, response) -> {
       int taskId = Integer.parseInt(request.queryParams("task_id"));
@@ -89,5 +91,25 @@ public class App {
       response.redirect("/tasks/" + taskId);
       return null;
     });
+
+
+    post("/tasks/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int id = Integer.parseInt(request.params("id"));
+      Task task = Task.find(id);
+      task.delete();
+      response.redirect("/tasks");
+      return null;
+    });
+
+    post("/categories/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int id = Integer.parseInt(request.params("id"));
+      Category category = Category.find(id);
+      category.delete();
+      response.redirect("/categories");
+      return null;
+    });
+
   }
 }
