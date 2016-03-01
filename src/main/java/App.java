@@ -125,11 +125,28 @@ public class App {
 
    post("/categories/:id/change-name", (request, response) -> {
     HashMap<String, Object> model = new HashMap<String, Object>();
-
     Category thisCategory = Category.find(Integer.parseInt(request.params("id")));
-
     thisCategory.update(request.queryParams("newname"));
     response.redirect("/categories/" + thisCategory.getId());
+    return null;
+      });
+
+    get("/tasks/:id/edit", (request, response) -> {
+     HashMap<String, Object> model = new HashMap<String, Object>();
+
+     Task thisTask = Task.find(Integer.parseInt(request.params("id")));
+     model.put("task", thisTask);
+     model.put("allCategories", Category.all());
+     model.put("template", "templates/updateTask.vtl");
+     return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+   post("/tasks/:id/change-description", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+
+    Task thisTask = Task.find(Integer.parseInt(request.params("id")));
+    thisTask.update(request.queryParams("newDescription"));
+    response.redirect("/tasks/" + thisTask.getId());
     return null;
       });
 

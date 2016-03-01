@@ -1,0 +1,7 @@
+<h4>Edit this task description:</h4>
+
+<form action="/tasks/$task.getId()/change-description" method="post">
+  <label for="newDescription">New Description</label>
+  <input id="newDescription" name="newDescription" type="text">
+  <button type="submit">Change task description</button>
+</form>
